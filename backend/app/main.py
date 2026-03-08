@@ -7,6 +7,7 @@ from models.ejercicio import Ejercicio
 from models.rutinaejercicio import RutinaEjercicio
 from routes.auth_routes import auth_bp
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
 
 app=Flask(__name__)
 
@@ -14,17 +15,13 @@ app.config.from_object(Config)
     
 db.init_app(app)
 jwt=JWTManager(app)
+migrate= Migrate(app, db)
 
 app.register_blueprint(auth_bp, url_prefix="/auth")
 
 @app.route('/')
 def hello_world():
     return "Bienvenido a Invictus!"
-
-with app.app_context():
-    print("creando tablas")
-    db.create_all()
-    print("tablas creadas")
     
 if __name__=="__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
