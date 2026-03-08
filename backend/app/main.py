@@ -5,12 +5,18 @@ from models.usuario import Usuario
 from models.rutina import Rutina
 from models.ejercicio import Ejercicio
 from models.rutinaejercicio import RutinaEjercicio
+from routes.auth_routes import auth_bp
+from flask_jwt_extended import JWTManager
 
 app=Flask(__name__)
 
 app.config.from_object(Config)
     
 db.init_app(app)
+jwt=JWTManager(app)
+
+app.register_blueprint(auth_bp, url_prefix="/auth")
+
 @app.route('/')
 def hello_world():
     return "Bienvenido a Invictus!"

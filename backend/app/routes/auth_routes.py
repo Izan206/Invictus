@@ -1,0 +1,45 @@
+from flask import Blueprint, jsonify, request
+
+from exceptions.exceptions import CredencialesInvalidasError, DatosFaltantesError, UsuarioExistenteError
+from models.usuario import Usuario
+from services.auth_service import autenticacion
+from services.usuario_service import crear_usuario
+from flask_jwt_extended import create_access_token
+
+auth_bp=Blueprint("auth", __name__)
+
+@auth_bp.route("/register", methods=["POST"])
+def register():
+    data=request.get_json()
+    if not data or data is None or data=="":
+        return jsonify({"exito": False, "error": "Ausencia de datos."}), 400
+    
+    try:
+        nuevoUsuario=crear_usuario(data)
+        return jsonify({"exito": True, "usuario": nuevoUsuario.username}),201
+    except DatosFaltantesError as e:
+        return jsonify({"exito": False, "error": str(e)}), 400
+    except UsuarioExistenteError as e:
+        return jsonify({"exito": False, "error": str(e)}), 409
+    except Exception as e:
+        return jsonify({"exito": False, "error": "Error interno del servidor"}), 500
+    
+@auth_bp.route("/login", methods=["POST"])
+def login():
+    data=request.get_json()
+    if not data or data is None or data=="":
+        return jsonify({"exito": False, "error": "Ausencia de datos"}), 400
+    
+    username=data.get("username")
+    password_introducida=data.get("password")
+    
+    try:
+        usuario=autenticacion(username, password_introducida)
+        token_usuario=create_access_token(identity=usuario.username)
+        return jsonify({"exito": True, "usuario": usuario.username, "token": token_usuario}), 200
+    except CredencialesInvalidasError as e:
+        return jsonify({"exito": False, "error": str(e)}), 401
+
+
+    
+    
