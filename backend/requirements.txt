@@ -1,3 +1,4 @@
+Flask-JWT-Extended
 Flask-SQLAlchemy
 psycopg2-binary
 blinker==1.9.0
