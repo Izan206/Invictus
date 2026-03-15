@@ -11,5 +11,15 @@ class Rutina(db.Model):
     
     usuario = db.relationship("Usuario", back_populates="rutinas")
     ejercicios = db.relationship("RutinaEjercicio", back_populates="rutina")
+    
     def __repr__(self):
         return f"<Rutina: {self.nombre}>"
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "descripcion": self.descripcion,
+            "dias": self.dias,
+            "usuario_id": self.usuario_id
+        }
