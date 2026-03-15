@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
 
-from exceptions.exceptions import CredencialesInvalidasError, DatosFaltantesError, UsuarioExistenteError
-from models.usuario import Usuario
-from services.auth_service import autenticacion
-from services.usuario_service import crear_usuario
+from app.exceptions.exceptions import CredencialesInvalidasError, DatosFaltantesError, UsuarioExistenteError
+from app.models.usuario import Usuario
+from app.services.auth_service import autenticacion
+from app.services.usuario_service import crear_usuario
 from flask_jwt_extended import create_access_token
 
 auth_bp=Blueprint("auth", __name__)
