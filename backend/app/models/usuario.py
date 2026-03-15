@@ -1,6 +1,6 @@
 from enum import Enum
 
-from db.database import db
+from app.db.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class TipoUsuario(Enum):

@@ -1,9 +1,9 @@
-from services.usuario_service import recibir_usuario_por_username
-from main import app, db
-from models.usuario import Usuario
-from models.rutina import Rutina
-from models.ejercicio import Ejercicio
-from models.rutinaejercicio import RutinaEjercicio
+from app.services.usuario_service import recibir_usuario_por_username
+from app.main import app, db
+from app.models.usuario import Usuario
+from app.models.rutina import Rutina
+from app.models.ejercicio import Ejercicio
+from app.models.rutinaejercicio import RutinaEjercicio
 
 def seed_data():
     with app.app_context():

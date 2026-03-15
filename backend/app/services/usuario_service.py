@@ -1,6 +1,6 @@
-from models.usuario import Usuario
-from repositories.usuario_repo import añadir_usuario, obtener_usuario_por_username
-from exceptions.exceptions import DatosFaltantesError, UsuarioExistenteError    
+from app.models.usuario import Usuario
+from app.repositories.usuario_repo import añadir_usuario, obtener_usuario_por_username
+from app.exceptions.exceptions import DatosFaltantesError, UsuarioExistenteError    
 
 def recibir_usuario_por_username(username):
     if username=="" or username==None:
