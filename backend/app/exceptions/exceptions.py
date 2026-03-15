@@ -21,3 +21,7 @@ class EjercicioNoEncontradoError(Exception):
 class EjercicioYaExistenteError(Exception):
     """El ejercicio ya existe en la base de datos"""
     pass
+
+class CrearRutinaError(Exception):
+    """Error al intentar crear una rutina"""
+    pass
