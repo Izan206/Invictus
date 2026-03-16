@@ -1,6 +1,6 @@
 from app.models.usuario import Usuario
-from app.repositories.usuario_repo import añadir_usuario, obtener_usuario_por_username
-from app.exceptions.exceptions import DatosFaltantesError, UsuarioExistenteError    
+from app.repositories.usuario_repo import añadir_usuario, obtener_usuario_por_id, obtener_usuario_por_username
+from app.exceptions.exceptions import DatosFaltantesError, UsuarioExistenteError, UsuarioNoEncontradoError    
 
 def recibir_usuario_por_username(username):
     if username=="" or username==None:
@@ -26,3 +26,10 @@ def crear_usuario(data):
         return nuevoUsuario
     except Exception as e:
         raise UsuarioExistenteError("El nombre de usuario o el email ya esta en uso")
+
+def recibir_usuario_por_id(usuario_id):
+    usuario=obtener_usuario_por_id(usuario_id)
+    if usuario:
+        return usuario
+    else:
+        raise UsuarioNoEncontradoError(f"No se ha encontrado ningun usuario con el id {usuario_id}")

@@ -25,3 +25,11 @@ class EjercicioYaExistenteError(Exception):
 class CrearRutinaError(Exception):
     """Error al intentar crear una rutina"""
     pass
+
+class RutinaNoEncontradaError(Exception):
+    """No se ha encontrado ninguna rutina en la base de datos que coincida"""
+    pass
+
+class UsuarioNoEncontradoError(Exception):
+    """No se ha encontrado ningun usuario con el parametro asociado"""
+    pass
