@@ -14,3 +14,7 @@ def obtener_rutina_por_nombre(nombre):
 def obtener_rutina_por_id(id):
     rutina=Rutina.query.filter_by(id=id).first()
     return rutina
+
+def obtener_rutinas_por_usuario(usuario_id):
+    rutinas=Rutina.query.filter_by(usuario_id=usuario_id).all()
+    return rutinas

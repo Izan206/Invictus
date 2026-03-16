@@ -1,6 +1,6 @@
 from app.exceptions.exceptions import CrearRutinaError, RutinaNoEncontradaError
 from app.models.rutina import Rutina
-from app.repositories.rutina_repo import añadir_rutina, obtener_rutina_por_id, obtener_rutina_por_nombre
+from app.repositories.rutina_repo import añadir_rutina, obtener_rutina_por_id, obtener_rutina_por_nombre, obtener_rutinas_por_usuario
 
 
 def crear_rutina(nombre, descripcion, dias, usuario_id):
@@ -24,3 +24,8 @@ def recibir_rutina_por_id(id_rutina):
         return rutina
     else:
         raise RutinaNoEncontradaError(f"No se ha encontrado la rutina con el id {id_rutina}")
+    
+def recibir_rutinas_por_usuario(usuario_id):
+    rutinas = obtener_rutinas_por_usuario(usuario_id)
+    return rutinas
+    

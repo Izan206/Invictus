@@ -3,8 +3,8 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from app.exceptions.exceptions import CrearRutinaError, RutinaNoEncontradaError
-from app.services.rutinas_services import crear_rutina, recibir_rutina_por_id, recibir_rutina_por_nombre
-from app.services.usuario_service import recibir_usuario_por_id, recibir_usuario_por_username
+from app.services.rutinas_services import crear_rutina, recibir_rutina_por_id, recibir_rutinas_por_usuario
+from app.services.usuario_service import recibir_usuario_por_username
 
 
 rutinas_bp=Blueprint("rutinas", __name__)
@@ -26,7 +26,29 @@ def crear_rutinas():
         return jsonify({"exito": True, "mensaje": f"Se ha creado la rutina {nombre} con exito.", "results": rutina.to_dict()}), 201
     except CrearRutinaError as e:
         return jsonify({"exito": False, "error": str(e)}), 500
+
+ 
+@rutinas_bp.route("/mis-rutinas", methods=["GET"])
+@jwt_required()
+def ver_mis_rutinas():
+    try:
+        usuarioActual=get_jwt_identity()
+        usuarioBD=recibir_usuario_por_username(usuarioActual)
+        
+        rutinasUsuario = recibir_rutinas_por_usuario(usuarioBD.id)
+        
+        rutinasJSON=[]
+        for rutina in rutinasUsuario:
+            rutinaJSON=rutina.to_dict()
+            rutinasJSON.append(rutinaJSON)
+        
+        return jsonify({"exito": True, "mensaje": "Se han obtenido las rutinas con exito", "rutinas": rutinasJSON}), 200
+    except Exception as e:
+        return jsonify({"exito": False, "error": f"{str(e)}"}), 500
     
+    
+    
+       
 @rutinas_bp.route("/rutina/<int:id_rutina>", methods=["GET"])
 @jwt_required()
 def ver_rutina(id_rutina):
