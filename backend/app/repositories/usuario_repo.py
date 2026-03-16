@@ -7,3 +7,7 @@ def obtener_usuario_por_username(username):
 def añadir_usuario(usuario):
     db.session.add(usuario)
     db.session.commit()
+    
+def obtener_usuario_por_id(usuario_id):
+    usuario=Usuario.query.filter_by(id=usuario_id).first()
+    return usuario
