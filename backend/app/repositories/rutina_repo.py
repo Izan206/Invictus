@@ -18,3 +18,7 @@ def obtener_rutina_por_id(id):
 def obtener_rutinas_por_usuario(usuario_id):
     rutinas=Rutina.query.filter_by(usuario_id=usuario_id).all()
     return rutinas
+
+def confirmar_eliminar_rutina(rutina):
+    db.session.delete(rutina)
+    db.session.commit()
