@@ -1,6 +1,6 @@
 from app.exceptions.exceptions import CrearRutinaError, RutinaNoEncontradaError
 from app.models.rutina import Rutina
-from app.repositories.rutina_repo import añadir_rutina, confirmar_eliminar_rutina, obtener_rutina_por_id, obtener_rutina_por_nombre, obtener_rutinas_por_usuario
+from app.repositories.rutina_repo import añadir_rutina, confirmar_cambios_rutina, confirmar_eliminar_rutina, obtener_rutina_por_id, obtener_rutina_por_nombre, obtener_rutinas_por_usuario
 
 
 def crear_rutina(nombre, descripcion, dias, usuario_id):
@@ -31,3 +31,11 @@ def recibir_rutinas_por_usuario(usuario_id):
 
 def eliminar_rutina_bd(rutina):
     confirmar_eliminar_rutina(rutina)
+    
+def actualizar_rutina_bd(rutina, nueva_info):
+    rutina.nombre = nueva_info.get("nombre", rutina.nombre)
+    rutina.descripcion = nueva_info.get("descripcion", rutina.descripcion)
+    rutina.dias = nueva_info.get("dias", rutina.dias)
+    
+    confirmar_cambios_rutina()
+    return rutina

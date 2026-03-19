@@ -22,3 +22,6 @@ def obtener_rutinas_por_usuario(usuario_id):
 def confirmar_eliminar_rutina(rutina):
     db.session.delete(rutina)
     db.session.commit()
+
+def confirmar_cambios_rutina():
+    db.session.commit()
