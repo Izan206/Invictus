@@ -33,3 +33,7 @@ class RutinaNoEncontradaError(Exception):
 class UsuarioNoEncontradoError(Exception):
     """No se ha encontrado ningun usuario con el parametro asociado"""
     pass
+
+class EjercicioEnRutinaYaExistente(Exception):
+    """Ya existe este ejercicio en la rutina"""
+    pass

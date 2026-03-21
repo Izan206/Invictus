@@ -9,3 +9,13 @@ class RutinaEjercicio(db.Model):
     
     rutina = db.relationship("Rutina", back_populates="ejercicios")
     ejercicio = db.relationship("Ejercicio", back_populates="rutinas")
+    
+    def to_dict(self):
+        return {
+            "rutina_id": self.rutina_id,
+            "ejercicio_id": self.ejercicio_id,
+            "series": self.series,
+            "repeticiones": self.repeticiones
+        }
+            
+        
