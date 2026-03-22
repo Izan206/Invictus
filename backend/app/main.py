@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from app.config import Config
 from app.db.database import db
 from app.models.usuario import Usuario
@@ -13,7 +14,7 @@ from app.routes.rutinas_routes import rutinas_bp
 from app.routes.rutinaejercicio_routes import rutinaejercicio_bp
 
 app=Flask(__name__)
-
+CORS(app, origins="http://localhost:5173")
 app.config.from_object(Config)
     
 db.init_app(app)
