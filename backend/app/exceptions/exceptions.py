@@ -37,3 +37,7 @@ class UsuarioNoEncontradoError(Exception):
 class EjercicioEnRutinaYaExistente(Exception):
     """Ya existe este ejercicio en la rutina"""
     pass
+
+class EjercicioNoEnRutinaError(Exception):
+    """El ejercicio no esta en esta rutina"""
+    pass

@@ -3,8 +3,8 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from app.services.rutinas_services import recibir_rutina_por_id
 from app.services.usuario_service import recibir_usuario_por_username
-from app.exceptions.exceptions import EjercicioEnRutinaYaExistente, RutinaNoEncontradaError
-from app.services.rutinaejercicio_service import añadir_ejercicio_a_rutina
+from app.exceptions.exceptions import EjercicioEnRutinaYaExistente, EjercicioNoEnRutinaError, RutinaNoEncontradaError
+from app.services.rutinaejercicio_service import añadir_ejercicio_a_rutina, eliminar_ejercicio_de_rutina, recibir_rutinaejercicio_por_idrutina_y_idejercicio
 
 
 rutinaejercicio_bp=Blueprint("rutinaejercicio", __name__)
@@ -25,6 +25,26 @@ def añadir_ejercicio(id_rutina):
             return jsonify({"exito": False, "error": "Acceso denegado"}), 403
     except EjercicioEnRutinaYaExistente as e:
         return jsonify({"exito": False, "error": str(e)}), 409
+    except RutinaNoEncontradaError as e:
+        return jsonify({"exito": False, "error": str(e)}), 404
+    except Exception as e:
+        return jsonify({"exito": False, "error": str(e)}), 500
+    
+@rutinaejercicio_bp.route("/<int:id_rutina>/eliminar-ejercicio/<int:id_ejercicio>", methods=["DELETE"])
+@jwt_required()
+def eliminar_ejercicio(id_rutina, id_ejercicio):
+    try:
+        usuarioActual=get_jwt_identity()
+        usuarioBD=recibir_usuario_por_username(usuarioActual)
+        rutina=recibir_rutina_por_id(id_rutina)
+        rutina_ejercicio=recibir_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, id_ejercicio)
+        if rutina.usuario_id==usuarioBD.id:
+            eliminar_ejercicio_de_rutina(rutina_ejercicio)
+            return jsonify({"exito": True, "mensaje": f"Se ha eliminado correctamente", "rutina_ejercicio_eliminado": rutina_ejercicio.to_dict()}), 200
+        else:
+            return jsonify({"exito": False, "error": "Acceso denegado"}), 403
+    except EjercicioNoEnRutinaError as e:
+        return jsonify({"exito": False, "error": str(e)}), 404
     except RutinaNoEncontradaError as e:
         return jsonify({"exito": False, "error": str(e)}), 404
     except Exception as e:
