@@ -10,7 +10,7 @@ class Rutina(db.Model):
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
     
     usuario = db.relationship("Usuario", back_populates="rutinas")
-    ejercicios = db.relationship("RutinaEjercicio", back_populates="rutina")
+    ejercicios = db.relationship("RutinaEjercicio", back_populates="rutina", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<Rutina: {self.nombre}>"
