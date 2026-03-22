@@ -8,12 +8,16 @@ def añadir_ejercicio_a_rutina(id_rutina, data):
     series=data.get("series", 3)
     repeticiones=data.get("repeticiones", 8)
     peso = data.get("peso")
-    try:
-        rutina_ejercicio= RutinaEjercicio(rutina_id=id_rutina, ejercicio_id=ejercicio_id, series=series, repeticiones=repeticiones, peso=peso)
-        guardar_ejercicio_en_rutina(rutina_ejercicio)
-        return rutina_ejercicio
-    except:
-        raise EjercicioEnRutinaYaExistente("Ya existe este ejercicio en la rutina, añade series o repeticiones")
+
+    ejercicio_bd = obtener_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, ejercicio_id)
+
+    if ejercicio_bd:
+        raise EjercicioEnRutinaYaExistente("Ya existe este ejercicio en la rutina, edita las series, repeticiones o peso")
+    
+    rutina_ejercicio= RutinaEjercicio(rutina_id=id_rutina, ejercicio_id=ejercicio_id, series=series, repeticiones=repeticiones, peso=peso)
+    guardar_ejercicio_en_rutina(rutina_ejercicio)
+    return rutina_ejercicio
+
 
 def recibir_ejercicios_por_rutina(id_rutina):
     ejercicios_rutina=obtener_ejercicios_rutina(id_rutina)
