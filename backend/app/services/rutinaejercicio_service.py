@@ -1,5 +1,5 @@
 from app.models.rutinaejercicio import RutinaEjercicio
-from app.repositories.rutinaejercicio_repo import confirmar_eliminacion_ejercicio_de_rutina, guardar_ejercicio_en_rutina, obtener_ejercicios_rutina, obtener_rutinaejercicio_por_idrutina_y_idejercicio
+from app.repositories.rutinaejercicio_repo import confirmar_eliminacion_ejercicio_de_rutina, guardar_actualizacion_ejercicio, guardar_ejercicio_en_rutina, obtener_ejercicios_rutina, obtener_rutinaejercicio_por_idrutina_y_idejercicio
 from app.exceptions.exceptions import EjercicioEnRutinaYaExistente, EjercicioNoEnRutinaError
 
 
@@ -36,3 +36,15 @@ def eliminar_ejercicio_de_rutina(rutina_ejercicio):
         confirmar_eliminacion_ejercicio_de_rutina(rutina_ejercicio)
     except:
         raise EjercicioNoEnRutinaError("No se ha encontrado el ejercicio en la rutina seleccionada")
+    
+def actualizar_ejercicio_en_rutina(id_rutina, id_ejercicio, data):
+    rutina_ejercicio = obtener_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, id_ejercicio)
+    if not rutina_ejercicio:
+        raise EjercicioNoEnRutinaError("No se ha encontrado el ejercicio en la rutina seleccionada")
+    
+    rutina_ejercicio.series = data.get("series", rutina_ejercicio.series)
+    rutina_ejercicio.repeticiones = data.get("repeticiones", rutina_ejercicio.repeticiones)
+    rutina_ejercicio.peso = data.get("peso", rutina_ejercicio.peso)
+
+    guardar_actualizacion_ejercicio()
+    return rutina_ejercicio
