@@ -7,9 +7,9 @@ def añadir_ejercicio_a_rutina(id_rutina, data):
     ejercicio_id=data.get("ejercicio_id")
     series=data.get("series", 3)
     repeticiones=data.get("repeticiones", 8)
-    
+    peso = data.get("peso")
     try:
-        rutina_ejercicio= RutinaEjercicio(rutina_id=id_rutina, ejercicio_id=ejercicio_id, series=series, repeticiones=repeticiones)
+        rutina_ejercicio= RutinaEjercicio(rutina_id=id_rutina, ejercicio_id=ejercicio_id, series=series, repeticiones=repeticiones, peso=peso)
         guardar_ejercicio_en_rutina(rutina_ejercicio)
         return rutina_ejercicio
     except:
