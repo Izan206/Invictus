@@ -17,3 +17,6 @@ def obtener_ejercicios_rutina(id_rutina):
 def confirmar_eliminacion_ejercicio_de_rutina(rutina_ejercicio):
     db.session.delete(rutina_ejercicio)
     db.session.commit()
+    
+def guardar_actualizacion_ejercicio():
+    db.session.commit()
