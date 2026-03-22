@@ -1,5 +1,5 @@
 from app.models.rutinaejercicio import RutinaEjercicio
-from app.repositories.rutinaejercicio_repo import confirmar_eliminacion_ejercicio_de_rutina, guardar_ejercicio_en_rutina, obtener_rutinaejercicio_por_idrutina_y_idejercicio
+from app.repositories.rutinaejercicio_repo import confirmar_eliminacion_ejercicio_de_rutina, guardar_ejercicio_en_rutina, obtener_ejercicios_rutina, obtener_rutinaejercicio_por_idrutina_y_idejercicio
 from app.exceptions.exceptions import EjercicioEnRutinaYaExistente, EjercicioNoEnRutinaError
 
 
@@ -15,7 +15,10 @@ def añadir_ejercicio_a_rutina(id_rutina, data):
     except:
         raise EjercicioEnRutinaYaExistente("Ya existe este ejercicio en la rutina, añade series o repeticiones")
 
- 
+def recibir_ejercicios_por_rutina(id_rutina):
+    ejercicios_rutina=obtener_ejercicios_rutina(id_rutina)
+    return ejercicios_rutina
+     
 def recibir_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, id_ejercicio):
     rutina_ejercicio = obtener_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, id_ejercicio)
 

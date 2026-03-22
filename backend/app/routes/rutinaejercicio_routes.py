@@ -4,7 +4,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from app.services.rutinas_services import recibir_rutina_por_id
 from app.services.usuario_service import recibir_usuario_por_username
 from app.exceptions.exceptions import EjercicioEnRutinaYaExistente, EjercicioNoEnRutinaError, RutinaNoEncontradaError
-from app.services.rutinaejercicio_service import añadir_ejercicio_a_rutina, eliminar_ejercicio_de_rutina, recibir_rutinaejercicio_por_idrutina_y_idejercicio
+from app.services.rutinaejercicio_service import añadir_ejercicio_a_rutina, eliminar_ejercicio_de_rutina, recibir_ejercicios_por_rutina, recibir_rutinaejercicio_por_idrutina_y_idejercicio
 
 
 rutinaejercicio_bp=Blueprint("rutinaejercicio", __name__)
@@ -29,7 +29,29 @@ def añadir_ejercicio(id_rutina):
         return jsonify({"exito": False, "error": str(e)}), 404
     except Exception as e:
         return jsonify({"exito": False, "error": str(e)}), 500
-    
+  
+@rutinaejercicio_bp.route("/<int:id_rutina>/obtener-ejercicios", methods=["GET"])
+@jwt_required()
+def obtener_ejercicios(id_rutina):
+    try:
+        usuarioActual=get_jwt_identity()
+        usuarioBD=recibir_usuario_por_username(usuarioActual)
+        rutina=recibir_rutina_por_id(id_rutina)
+        
+        if rutina.usuario_id==usuarioBD.id:
+            ejercicios_rutina=recibir_ejercicios_por_rutina(id_rutina)
+            ejercicios_json = []
+            for ejercicio in ejercicios_rutina:
+                ejercicios_json.append(ejercicio.to_dict())
+            return jsonify({"exito": True, "mensaje": "Se han obtenido correctamente los ejercicios de tu rutina", "ejercicios_rutina": ejercicios_json}), 200
+        
+        else:
+            return jsonify({"exito": False, "error": "Acceso denegado"}), 403
+    except RutinaNoEncontradaError as e:
+        return jsonify({"exito": False, "error": str(e)}), 404
+    except Exception as e:
+        return jsonify({"exito": False, "error": str(e)}), 500
+
 @rutinaejercicio_bp.route("/<int:id_rutina>/eliminar-ejercicio/<int:id_ejercicio>", methods=["DELETE"])
 @jwt_required()
 def eliminar_ejercicio(id_rutina, id_ejercicio):
