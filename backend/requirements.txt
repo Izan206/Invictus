@@ -12,3 +12,4 @@ python-dotenv==1.2.1
 Werkzeug==3.1.6
 Flask-Migrate
 requests
+flask-cors
