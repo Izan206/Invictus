@@ -41,3 +41,7 @@ class EjercicioEnRutinaYaExistente(Exception):
 class EjercicioNoEnRutinaError(Exception):
     """El ejercicio no esta en esta rutina"""
     pass
+
+class EjerciciosNoEncontradosError(Exception):
+    """No se han encontrado ejercicios"""
+    pass
