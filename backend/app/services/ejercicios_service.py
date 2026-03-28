@@ -1,8 +1,8 @@
-from app.repositories.ejercicio_repo import añadir_ejercicio, obtener_ejercicio_por_nombre, obtener_ejercicios_contengan_nombre
+from app.repositories.ejercicio_repo import añadir_ejercicio, obtener_ejercicio_por_nombre, obtener_ejercicios_contengan_nombre, obtener_todos_los_ejercicios
 from app.models.ejercicio import Ejercicio
 from app.db.database import db
 from app.clients.exercisedb_client import fetch_ejercicio_por_nombre, fetch_ejercicios
-from app.exceptions.exceptions import APIError, EjercicioNoEncontradoError, EjercicioYaExistenteError
+from app.exceptions.exceptions import APIError, EjercicioNoEncontradoError, EjercicioYaExistenteError, EjerciciosNoEncontradosError
 
 def recibir_ejercicio_por_nombre(nombre):
     ejercicio = obtener_ejercicio_por_nombre(nombre)
@@ -70,3 +70,24 @@ def adaptar_ejercicios(ejerciciosBuscador=None):
             ejerciciosAdaptados.append(ejercicioBD)
             
     return ejerciciosAdaptados
+
+def recibir_todos_los_ejercicios():
+    ejercicios = obtener_todos_los_ejercicios()
+    
+    if not ejercicios or len(ejercicios) == 0:
+        ejercicios = adaptar_ejercicios() 
+        
+        if len(ejercicios) > 70:
+            lista_limitada = []
+            contador = 0
+            for ejercicio in ejercicios:
+                if contador < 70:
+                    lista_limitada.append(ejercicio)
+                    contador += 1
+    
+            ejercicios = lista_limitada
+            
+    if not ejercicios:
+        raise EjerciciosNoEncontradosError("No se han encontrado ejercicios")
+        
+    return ejercicios

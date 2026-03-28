@@ -13,3 +13,7 @@ def obtener_ejercicios_contengan_nombre(nombreBuscado):
 def añadir_ejercicio(ejercicio):
     db.session.add(ejercicio)
     db.session.commit()
+
+def obtener_todos_los_ejercicios():
+    ejercicios=Ejercicio.query.limit(70).all()
+    return ejercicios
