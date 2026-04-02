@@ -4,7 +4,7 @@ from app.exceptions.exceptions import CredencialesInvalidasError, DatosFaltantes
 from app.models.usuario import Usuario
 from app.services.auth_service import autenticacion
 from app.services.usuario_service import crear_usuario
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required
 
 auth_bp=Blueprint("auth", __name__)
 
@@ -40,6 +40,9 @@ def login():
     except CredencialesInvalidasError as e:
         return jsonify({"exito": False, "error": str(e)}), 401
 
-
+@auth_bp.route("/logout", methods=["POST"])
+@jwt_required()
+def logout():
+    return jsonify({"exito": True, "mensaje": "Has cerrado sesión correctamente"}), 200
     
     

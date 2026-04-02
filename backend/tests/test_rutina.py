@@ -35,7 +35,7 @@ def test_crear_rutina_exito(client, app):
 
 
 def test_crear_rutina_sin_token_da_error(client):
-    datos_rutina = {"nombre": "Rutina Hacker", "descripcion": "Intento ilegal", "dias": 1}
+    datos_rutina = {"nombre": "RutinaError", "descripcion": "debe dar error", "dias": 1}
     response = client.post("/api/rutinas/crear_rutina", json=datos_rutina)
     
     assert response.status_code == 401
