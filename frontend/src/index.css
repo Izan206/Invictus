@@ -35,15 +35,6 @@
       sans-serif;
   }
 
-  a {
-    color: var(--primary);
-    transition: opacity 0.3s ease;
-  }
-
-  a:hover {
-    opacity: 0.8;
-  }
-
   input {
     background-color: var(--input);
     color: var(--foreground);
