@@ -1,14 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
-import './index.css';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
+import Inicio from './pages/Inicio';
+import Catalogo from './pages/Catalogo';
+import Error404 from './pages/Error404';
+import Layout from './components/layout/Layout';
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Header />
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Inicio />}></Route>
+        <Route path="catalogo" element={<Catalogo />}></Route>
+        <Route path="*" element={<Error404 />}></Route>
+      </Route>
+    </Routes>
   );
 }
 
