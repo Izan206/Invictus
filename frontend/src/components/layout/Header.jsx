@@ -20,7 +20,7 @@ function Header() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-background/95 backdrop-blur-md border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-32 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
         <Link to="/" onClick={cerrarMenuMovil} className="z-50 md:-ml-11">
           <img
             src={logoInvictus}
@@ -59,7 +59,7 @@ function Header() {
           ) : (
             <Link
               to="/login"
-              className="px-10 py-4 border border-primary bg-background rounded-full hover:bg-primary hover:text-background transition-all duration-500 font-bold text-xs uppercase tracking-wider text-primary"
+              className="px-10 py-4 border border-white/20 rounded-full text-white font-bold text-xs tracking-[0.2em] uppercase hover:border-[#00ffff] hover:text-[#00ffff] hover:bg-[#00ffff]/5 transition-all duration-300"
             >
               Iniciar Sesión
             </Link>
