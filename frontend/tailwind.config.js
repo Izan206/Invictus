@@ -4,7 +4,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Enlazamos las clases de Tailwind con tus variables CSS
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         container: 'var(--container)',
