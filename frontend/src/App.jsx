@@ -1,16 +1,24 @@
 import { Routes, Route } from 'react-router-dom';
+import MainLayout from './layouts/MainLayout';
+import AuthLayout from './layouts/AuthLayout';
 import Inicio from './pages/Inicio';
+import Registro from './pages/Registro';
+import Login from './pages/Login';
 import Catalogo from './pages/Catalogo';
 import Error404 from './pages/Error404';
-import Layout from './components/layout/Layout';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Inicio />}></Route>
-        <Route path="catalogo" element={<Catalogo />}></Route>
-        <Route path="*" element={<Error404 />}></Route>
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/catalogo" element={<Catalogo />} />
+        <Route path="*" element={<Error404 />} />
+      </Route>
+
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
       </Route>
     </Routes>
   );
