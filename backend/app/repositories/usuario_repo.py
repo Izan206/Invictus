@@ -11,3 +11,7 @@ def añadir_usuario(usuario):
 def obtener_usuario_por_id(usuario_id):
     usuario=Usuario.query.filter_by(id=usuario_id).first()
     return usuario
+
+def obtener_usuario_por_email(email):
+    usuario=Usuario.query.filter_by(email=email).first()
+    return usuario

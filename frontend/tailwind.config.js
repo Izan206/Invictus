@@ -28,6 +28,9 @@ export default {
         lg: 'var(--radius-lg)',
         md: 'var(--radius-md)',
         sm: 'var(--radius-sm)'
+      },
+      backgroundImage: {
+        'background-image': 'url(/src/assets/auth/gym.png)'
       }
     }
   },
