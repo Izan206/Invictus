@@ -1,22 +1,29 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoInvictus from '../../assets/logo/logo-final.png';
 import { Menu, X, User } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 function Header() {
   const ubicacion = useLocation();
+  const navigate = useNavigate();
   const [menuMovilAbierto, setMenuMovilAbierto] = useState(false);
 
-  const estaAutenticado = false;
-  const usuarioActual = { username: 'Izan' };
+  const { usuario, logout } = useAuth();
 
   const enlacesNav = [
     { name: 'Inicio', path: '/' },
     { name: 'Descubre Ejercicios', path: '/catalogo' },
-    { name: 'Tus Rutinas', path: '/rutinas' }
+    ...(usuario ? [{ name: 'Tus Rutinas', path: '/rutinas' }] : [])
   ];
 
   const cerrarMenuMovil = () => setMenuMovilAbierto(false);
+
+  const manejarCierreSesion = () => {
+    logout();
+    cerrarMenuMovil();
+    navigate('/');
+  };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-background/95 backdrop-blur-md border-b border-white/5">
@@ -45,17 +52,27 @@ function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center">
-          {estaAutenticado ? (
-            <Link
-              to="/perfil"
-              className=" group flex items-center justify-center gap-2 border border-primary rounded-full py-4 px-10 text-foreground hover:bg-primary  hover:text-black transition-colors duration-500"
-            >
-              <User className="w-5 h-5 text-foreground group-hover:text-black transition-colors duration-500" />
-              <span className="font-medium text-sm group-hover:font-medium">
-                {usuarioActual.username}
-              </span>
-            </Link>
+        <div className="hidden md:flex items-center gap-4">
+          {usuario ? (
+            <>
+              {' '}
+              <Link
+                to="/perfil"
+                className=" group flex items-center justify-center gap-2 border border-primary rounded-full py-4 px-10 text-foreground hover:bg-primary  hover:text-black transition-colors duration-500"
+              >
+                <User className="w-5 h-5 text-foreground group-hover:text-black transition-colors duration-500" />
+                <span className="font-medium text-sm group-hover:font-medium">
+                  {usuario.username}
+                </span>
+              </Link>
+              {/* este boton va a ser temporal, más adelante lo metere solo dentro de la página de peril */}
+              <button
+                onClick={manejarCierreSesion}
+                className="text-sm font-medium text-red-500 hover:text-red-400 transition-colors"
+              >
+                Salir
+              </button>
+            </>
           ) : (
             <Link
               to="/login"
@@ -105,17 +122,24 @@ function Header() {
 
           <div className="w-full h-px bg-white/30 my-2"></div>
 
-          {estaAutenticado ? (
-            <Link
-              to="/perfil"
-              onClick={cerrarMenuMovil}
-              className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
-            >
-              <User className="w-6 h-6 text-primary" />
-              <span className="text-xl font-medium">
-                {usuarioActual.username}
-              </span>
-            </Link>
+          {usuario ? (
+            <>
+              {' '}
+              <Link
+                to="/perfil"
+                onClick={cerrarMenuMovil}
+                className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
+              >
+                <User className="w-6 h-6 text-primary" />
+                <span className="text-xl font-medium">{usuario.username}</span>
+              </Link>
+              <button
+                onClick={manejarCierreSesion}
+                className="text-lg font-bold text-red-500 uppercase tracking-wider hover:text-red-400 transition-colors mt-2"
+              >
+                Cerrar Sesión
+              </button>
+            </>
           ) : (
             <Link
               to="/login"
