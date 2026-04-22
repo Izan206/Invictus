@@ -8,6 +8,12 @@ def recibir_usuario_por_username(username):
     usernameObtenido=obtener_usuario_por_username(username)
     return usernameObtenido
 
+def recibir_usuario_por_email(email):
+    if email=="" or email==None:
+        return None
+    emailObtenido=obtener_usuario_por_email(email)
+    return emailObtenido
+
 def crear_usuario(data):
     username=data.get("username")
     email=data.get("email")

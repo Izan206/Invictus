@@ -30,13 +30,13 @@ def login():
     if not data or data is None or data=="":
         return jsonify({"exito": False, "error": "Ausencia de datos"}), 400
     
-    username=data.get("username")
+    email=data.get("email")
     password_introducida=data.get("password")
     
     try:
-        usuario=autenticacion(username, password_introducida)
-        token_usuario=create_access_token(identity=usuario.username)
-        return jsonify({"exito": True, "usuario": usuario.username, "token": token_usuario}), 200
+        usuario=autenticacion(email, password_introducida)
+        token_usuario=create_access_token(identity=usuario.email)
+        return jsonify({"exito": True, "usuario": usuario.email, "token": token_usuario}), 200
     except CredencialesInvalidasError as e:
         return jsonify({"exito": False, "error": str(e)}), 401
 
