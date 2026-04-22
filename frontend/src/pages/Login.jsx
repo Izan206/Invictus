@@ -32,7 +32,8 @@ function Login() {
       console.log(respuesta);
       login({
         token: respuesta.token,
-        email: respuesta.usuario
+        email: respuesta.usuario,
+        username: respuesta.username
       });
       pagina('/catalogo');
     } catch (excepcion) {

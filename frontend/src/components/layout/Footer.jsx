@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import logoInvictus from '../../assets/logo/logo-footer.png';
 import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext';
 
 function Footer() {
   const añoActual = new Date().getFullYear();
+  const { usuario } = useAuth();
 
   return (
     <footer className="relative bg-background pt-16 pb-8 mt-auto overflow-hidden">
@@ -50,23 +52,25 @@ function Footer() {
             </h3>
             <div className="flex flex-col gap-4 text-center md:text-left">
               <Link
+                to="/"
+                className="text-foreground/70 hover:text-primary transition-colors text-sm flex items-center justify-center md:justify-start opacity-70"
+              >
+                Inicio
+              </Link>
+              <Link
                 to="/catalogo"
                 className="text-foreground/70 hover:text-primary transition-colors text-sm flex items-center justify-center md:justify-start opacity-70"
               >
                 Descubre Ejercicios
               </Link>
-              <Link
-                to="/rutinas"
-                className="text-foreground/70 hover:text-primary transition-colors text-sm flex items-center justify-center md:justify-start opacity-70"
-              >
-                Tus Rutinas
-              </Link>
-              <Link
-                to="/login"
-                className="text-foreground/70 hover:text-primary transition-colors text-sm flex items-center justify-center md:justify-start opacity-70"
-              >
-                Iniciar Sesión
-              </Link>
+              {usuario && (
+                <Link
+                  to="/rutinas"
+                  className="text-foreground/70 hover:text-primary transition-colors text-sm flex items-center justify-center md:justify-start opacity-70"
+                >
+                  Tus Rutinas
+                </Link>
+              )}
             </div>
           </div>
 

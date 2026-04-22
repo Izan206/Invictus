@@ -31,7 +31,7 @@ function Registro() {
     setCargando(true);
     try {
       const respuesta = await authService.registro(infoUsuario);
-      pagina('/catalogo');
+      pagina('/login');
       console.log(respuesta);
     } catch (excepcion) {
       console.log(
