@@ -6,6 +6,11 @@ const authService = {
   registro: async (datosUsuario) => {
     const respuesta = await axios.post(API_BACKEND + 'register', datosUsuario);
     return respuesta;
+  },
+
+  login: async (credenciales) => {
+    const respuesta = await axios.post(API_BACKEND + 'login', credenciales);
+    return respuesta.data;
   }
 };
 
