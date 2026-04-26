@@ -1,4 +1,4 @@
-from app.repositories.ejercicio_repo import añadir_ejercicio, obtener_ejercicio_por_nombre, obtener_ejercicios_contengan_nombre, obtener_todos_los_ejercicios
+from app.repositories.ejercicio_repo import añadir_ejercicio, obtener_ejercicio_por_nombre, obtener_ejercicios_contengan_nombre, obtener_ejercicios_paginados, obtener_todos_los_ejercicios
 from app.models.ejercicio import Ejercicio
 from app.db.database import db
 from app.clients.exercisedb_client import fetch_ejercicio_por_nombre, fetch_ejercicios
@@ -91,3 +91,16 @@ def recibir_todos_los_ejercicios():
         raise EjerciciosNoEncontradosError("No se han encontrado ejercicios")
         
     return ejercicios
+
+def recibir_catalogo_paginado(pagina=1, por_pagina=12):
+    paginacion = obtener_ejercicios_paginados(pagina, por_pagina)
+    
+    if paginacion.total == 0:
+        adaptar_ejercicios()
+        
+        paginacion = obtener_ejercicios_paginados(pagina, por_pagina)
+        
+    if paginacion.total == 0:
+        raise EjerciciosNoEncontradosError("No se han encontrado ejercicios para el catálogo")
+        
+    return paginacion
