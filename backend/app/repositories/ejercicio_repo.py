@@ -17,3 +17,6 @@ def añadir_ejercicio(ejercicio):
 def obtener_todos_los_ejercicios():
     ejercicios=Ejercicio.query.limit(70).all()
     return ejercicios
+
+def obtener_ejercicios_paginados(pagina=1, por_pagina=12):
+    return Ejercicio.query.paginate(page=pagina, per_page=por_pagina, error_out=False)

@@ -1,8 +1,8 @@
 import os
 
-from flask import Blueprint, jsonify, send_file
+from flask import Blueprint, jsonify, send_file, request
 from flask_jwt_extended import jwt_required
-from app.services.ejercicios_service import adaptar_ejercicios, buscar_ejercicio_por_nombre, recibir_todos_los_ejercicios
+from app.services.ejercicios_service import adaptar_ejercicios, buscar_ejercicio_por_nombre, recibir_todos_los_ejercicios, recibir_catalogo_paginado
 from app.clients.exercisedb_client import fetch_imagen_ejercicio
 from app.exceptions.exceptions import EjerciciosNoEncontradosError
 
@@ -22,13 +22,24 @@ def obtener_ejercicios():
 @ejercicios_bp.route("/catalogo", methods=["GET"])
 def obtener_catalogo():
     try:
-        ejercicios_bd = recibir_todos_los_ejercicios()
+        
+        pagina= request.args.get('page', 1, type=int)
+        por_pagina=request.args.get('limit', 12, type=int)
+        
+        paginacion=recibir_catalogo_paginado(pagina=pagina, por_pagina=por_pagina)
+        
         ejerciciosJSON = []
         
-        for ejercicio in ejercicios_bd:
+        for ejercicio in paginacion.items:
             ejerciciosJSON.append(ejercicio.to_dict())
             
-        return jsonify({"exito": True, "total": len(ejerciciosJSON), "resultados": ejerciciosJSON}), 200
+        return jsonify({"exito": True, "total": len(ejerciciosJSON), "resultados": ejerciciosJSON, "meta": {
+                "total_ejercicios": paginacion.total,
+                "paginas_totales": paginacion.pages,
+                "pagina_actual": paginacion.page,
+                "tiene_siguiente": paginacion.has_next,
+                "tiene_anterior": paginacion.has_prev
+            }}), 200
     
     except EjerciciosNoEncontradosError as e:
         return jsonify({"exito": False, "error": str(e)}), 404
