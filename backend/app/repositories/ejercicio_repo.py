@@ -20,3 +20,7 @@ def obtener_todos_los_ejercicios():
 
 def obtener_ejercicios_paginados(pagina=1, por_pagina=12):
     return Ejercicio.query.paginate(page=pagina, per_page=por_pagina, error_out=False)
+
+def obtener_ejercicio_por_id_api(id_api):
+    ejercicio = Ejercicio.query.filter_by(id_api=id_api).first()
+    return ejercicio
