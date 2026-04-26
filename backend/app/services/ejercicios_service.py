@@ -129,15 +129,13 @@ def recibir_todos_los_ejercicios():
         
     return ejercicios
 
-def recibir_catalogo_paginado(pagina=1, por_pagina=12):
-    paginacion = obtener_ejercicios_paginados(pagina, por_pagina)
+def recibir_catalogo_paginado(pagina=1, por_pagina=12, categoria=None, busqueda=None):
+    paginacion = obtener_ejercicios_paginados(pagina, por_pagina, categoria, busqueda)
     
-    if paginacion.total == 0:
+    if paginacion.total == 0 and not categoria and not busqueda:
         adaptar_ejercicios()
-        
-        paginacion = obtener_ejercicios_paginados(pagina, por_pagina)
-        
+        paginacion = obtener_ejercicios_paginados(pagina, por_pagina, categoria, busqueda)
     if paginacion.total == 0:
-        raise EjerciciosNoEncontradosError("No se han encontrado ejercicios para el catálogo")
+        return paginacion
         
     return paginacion

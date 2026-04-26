@@ -18,9 +18,16 @@ def obtener_todos_los_ejercicios():
     ejercicios=Ejercicio.query.limit(70).all()
     return ejercicios
 
-def obtener_ejercicios_paginados(pagina=1, por_pagina=12):
-    return Ejercicio.query.paginate(page=pagina, per_page=por_pagina, error_out=False)
-
 def obtener_ejercicio_por_id_api(id_api):
     ejercicio = Ejercicio.query.filter_by(id_api=id_api).first()
     return ejercicio
+
+def obtener_ejercicios_paginados(pagina=1, por_pagina=12, categoria=None, busqueda=None):
+    query = Ejercicio.query
+    if categoria and categoria.lower() != 'todo':
+        query = query.filter(Ejercicio.grupo_muscular.ilike(f"%{categoria}%"))
+        
+    if busqueda:
+        query = query.filter(Ejercicio.nombre.ilike(f"%{busqueda}%"))
+
+    return query.paginate(page=pagina, per_page=por_pagina, error_out=False)
