@@ -1,9 +1,19 @@
-from app.repositories.ejercicio_repo import añadir_ejercicio, obtener_ejercicio_por_nombre, obtener_ejercicios_contengan_nombre, obtener_ejercicios_paginados, obtener_todos_los_ejercicios
+from deep_translator import GoogleTranslator
+from app.repositories.ejercicio_repo import añadir_ejercicio, obtener_ejercicio_por_nombre, obtener_ejercicios_contengan_nombre, obtener_ejercicios_paginados, obtener_todos_los_ejercicios, obtener_ejercicio_por_id_api
 from app.models.ejercicio import Ejercicio
 from app.db.database import db
 from app.clients.exercisedb_client import fetch_ejercicio_por_nombre, fetch_ejercicios
 from app.exceptions.exceptions import APIError, EjercicioNoEncontradoError, EjercicioYaExistenteError, EjerciciosNoEncontradosError
 
+traductor = GoogleTranslator(source='en', target='es')
+def traducir_texto(texto):
+    if not texto: 
+        return texto
+    try:
+        return traductor.translate(texto)
+    except:
+        return texto
+    
 def recibir_ejercicio_por_nombre(nombre):
     ejercicio = obtener_ejercicio_por_nombre(nombre)
     if ejercicio is None:
@@ -37,7 +47,8 @@ def crear_ejercicio(id_api, nombre, descripcion, dificultad, instrucciones, imag
         añadir_ejercicio(ejercicioBD)
         return ejercicioBD
     except Exception as e:
-        raise EjercicioYaExistenteError("El ejercicio ya existe en la base de datos")
+        db.session.rollback()
+        raise EjercicioYaExistenteError(f"El ejercicio ya existe o hay un dato duplicado: {str(e)}")
   
 def adaptar_ejercicios(ejerciciosBuscador=None):
     if not ejerciciosBuscador:
@@ -47,25 +58,51 @@ def adaptar_ejercicios(ejerciciosBuscador=None):
         
     if not ejercicios:
         return []
+
+    dicc_musculos = {
+        "pectorals": "Pecho", "lats": "Espalda", "biceps": "Bíceps", 
+        "triceps": "Tríceps", "abs": "Abdominales", "quads": "Pierna", "delts": "Hombros"
+    }
+    dicc_dificultad = {
+        "beginner": "Principiante", "intermediate": "Intermedio", "expert": "Avanzado"
+    }
     
     ejerciciosAdaptados = []
+    
     for ejercicio in ejercicios:
-        nombre_api = ejercicio.get("name")
-        try:
-            ejercicio_existente = recibir_ejercicio_por_nombre(nombre_api)
+        id_api = ejercicio.get("id")
+        
+        ejercicio_existente = obtener_ejercicio_por_id_api(id_api)
+        
+        if ejercicio_existente:
             ejerciciosAdaptados.append(ejercicio_existente)
-        except EjercicioNoEncontradoError:
-            id_api = ejercicio.get("id")
-            descripcion = ejercicio.get("description")
-            dificultad = ejercicio.get("difficulty")
-            instrucciones = ejercicio.get("instructions", [])
-            maquina = ejercicio.get("equipment")
-            grupo_muscular = ejercicio.get("target")
+        else:
+            nombre_original = ejercicio.get("name")
+            print(f"Traduciendo y guardando: {nombre_original}...")
+            
+            nombre_es = traducir_texto(nombre_original)
+            
+            if obtener_ejercicio_por_nombre(nombre_es) is not None:
+                nombre_es = f"{nombre_es} ({id_api})"
+            
+            descripcion_es = traducir_texto(ejercicio.get("description"))
+            maquina_es = traducir_texto(ejercicio.get("equipment"))
+            
+            instrucciones_en = ejercicio.get("instructions", [])
+            instrucciones_es = []
+            for paso in instrucciones_en:
+                instrucciones_es.append(traducir_texto(paso))
+            
+            dificultad_en = ejercicio.get("difficulty")
+            dificultad_es = dicc_dificultad.get(dificultad_en, traducir_texto(dificultad_en))
+            
+            grupo_en = ejercicio.get("target")
+            grupo_muscular_es = dicc_musculos.get(grupo_en, traducir_texto(grupo_en))
             
             url_imagen = f"/api/ejercicios/{id_api}/imagen"
             
             ejercicioBD = crear_ejercicio(
-                id_api, nombre_api, descripcion, dificultad, instrucciones, url_imagen, maquina, grupo_muscular
+                id_api, nombre_es, descripcion_es, dificultad_es, instrucciones_es, url_imagen, maquina_es, grupo_muscular_es
             )
             ejerciciosAdaptados.append(ejercicioBD)
             
