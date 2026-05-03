@@ -17,7 +17,8 @@ class RutinaEjercicio(db.Model):
             "ejercicio_id": self.ejercicio_id,
             "series": self.series,
             "repeticiones": self.repeticiones,
-            "peso": self.peso
+            "peso": self.peso,
+            "ejercicio_detalle": self.ejercicio.to_dict()
         }
             
         
