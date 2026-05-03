@@ -3,6 +3,18 @@ import { createContext, useState, useContext } from 'react';
 
 const AuthContext = createContext();
 
+const esTokenValido = (token) => {
+  if (!token) return false;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const tiempoExpiracion = payload.exp * 1000;
+
+    return Date.now() < tiempoExpiracion;
+  } catch {
+    return false;
+  }
+};
+
 export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(() => {
     const tokenGuardado = localStorage.getItem('token_invictus');
@@ -10,11 +22,18 @@ export const AuthProvider = ({ children }) => {
     const usernameGuardado = localStorage.getItem('username_invictus');
 
     if (tokenGuardado && emailGuardado) {
-      return {
-        email: emailGuardado,
-        token: tokenGuardado,
-        username: usernameGuardado
-      };
+      if (esTokenValido(tokenGuardado)) {
+        return {
+          email: emailGuardado,
+          token: tokenGuardado,
+          username: usernameGuardado
+        };
+      } else {
+        localStorage.removeItem('token_invictus');
+        localStorage.removeItem('email_invictus');
+        localStorage.removeItem('username_invictus');
+        return null;
+      }
     }
     return null;
   });
@@ -27,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('email_invictus', datosUsuario.email);
     localStorage.setItem('username_invictus', datosUsuario.username);
   };
+
   const logout = () => {
     setUsuario(null);
     localStorage.removeItem('token_invictus');
