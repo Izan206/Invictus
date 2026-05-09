@@ -176,7 +176,7 @@ function Catalogo() {
           <div className="relative w-full max-w-2xl">
             <input
               type="text"
-              placeholder="Buscar en toda la base de datos..."
+              placeholder="Busca tu ejercicio favorito..."
               value={busqueda}
               onChange={manejarBusqueda}
               className="w-full h-14 bg-[#111111] border border-neutral-800 rounded-full pl-14 pr-6 text-white placeholder:text-neutral-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
