@@ -24,14 +24,19 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('token_invictus');
-      localStorage.removeItem('email_invictus');
-      localStorage.removeItem('username_invictus');
-      if (window.location.pathname !== '/') {
-        window.location.href = '/';
+      const urlRechazada = error.config.url;
+
+      if (!urlRechazada.includes('auth/login')) {
+        localStorage.removeItem('token_invictus');
+        localStorage.removeItem('email_invictus');
+        localStorage.removeItem('username_invictus');
+        if (window.location.pathname !== '/') {
+          window.location.href = '/';
+        }
       }
     }
     return Promise.reject(error);
   }
 );
+
 export default api;
