@@ -53,7 +53,6 @@ function TusRutinas() {
       if (respuesta.data.exito) {
         setModalAbierto(false);
         setDatosFormulario({ nombre: '', dias: '', descripcion: '' });
-
         const nuevaRutinaId = respuesta.data.results.id;
         navigate(`/rutinas/${nuevaRutinaId}`);
       }
@@ -62,6 +61,26 @@ function TusRutinas() {
       alert('Hubo un error al crear la rutina');
     } finally {
       setGuardando(false);
+    }
+  };
+
+  const manejarEliminar = async (idRutina) => {
+    const confirmar = window.confirm(
+      '¿Estás seguro de que quieres eliminar esta rutina?'
+    );
+
+    if (confirmar) {
+      try {
+        const respuesta = await api.delete(
+          `api/rutinas/eliminar-rutina/${idRutina}`
+        );
+        if (respuesta.data.exito) {
+          setRutinas(rutinas.filter((rutina) => rutina.id !== idRutina));
+        }
+      } catch (error) {
+        console.error('Error al eliminar la rutina:', error);
+        alert('Hubo un error al eliminar la rutina');
+      }
     }
   };
 
@@ -92,7 +111,12 @@ function TusRutinas() {
             </p>
           ) : (
             rutinas.map((rutina, index) => (
-              <RutinaCard key={rutina.id} rutina={rutina} index={index} />
+              <RutinaCard
+                key={rutina.id}
+                rutina={rutina}
+                index={index}
+                alEliminar={manejarEliminar}
+              />
             ))
           )}
         </div>
@@ -107,11 +131,9 @@ function TusRutinas() {
             >
               <X className="w-6 h-6" />
             </button>
-
             <h2 className="text-2xl font-bold mb-6 text-white uppercase tracking-wide">
               Nueva Rutina
             </h2>
-
             <form onSubmit={manejarEnvio} className="flex flex-col gap-5">
               <div>
                 <label className="block text-sm font-medium text-[var(--muted-foreground)] mb-2">
@@ -127,7 +149,6 @@ function TusRutinas() {
                   className="bg-[var(--input)] text-[var(--foreground)] border border-transparent rounded-[var(--radius-sm)] p-3 w-full focus:outline-none focus:border-[var(--primary-muted)] transition-colors"
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-[var(--muted-foreground)] mb-2">
                   Días de Entrenamiento
@@ -141,7 +162,6 @@ function TusRutinas() {
                   className="bg-[var(--input)] text-[var(--foreground)] border border-transparent rounded-[var(--radius-sm)] p-3 w-full focus:outline-none focus:border-[var(--primary-muted)] transition-colors"
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-[var(--muted-foreground)] mb-2">
                   Descripción
@@ -155,11 +175,10 @@ function TusRutinas() {
                   className="bg-[var(--input)] text-[var(--foreground)] border border-transparent rounded-[var(--radius-sm)] p-3 w-full focus:outline-none focus:border-[var(--primary-muted)] transition-colors resize-none"
                 ></textarea>
               </div>
-
               <button
                 type="submit"
                 disabled={guardando}
-                className="w-full mt-2 bg-[var(--primary)] text-black font-bold py-3 rounded-[var(--radius-md)] hover:bg-[var(--primary-hover)] transition-colors disabled:opacity-50"
+                className="w-full mt-2 bg-[var(--primary)] text-black font-bold py-3 rounded-[var(--radius-md)] hover:bg-black/30 border border-primary transition-colors duration-[0.4s] hover:text-primary disabled:opacity-50"
               >
                 {guardando ? 'Guardando...' : 'Crear Rutina'}
               </button>

@@ -1,9 +1,12 @@
 import { Trash2 } from 'lucide-react';
 
-function RutinaCard({ rutina, index }) {
+function RutinaCard({ rutina, index, alEliminar }) {
   return (
     <div className="bg-[var(--container)] rounded-[var(--radius-lg)] p-6 relative group border border-transparent hover:border-[var(--search)] transition-colors flex flex-col">
-      <button className="absolute top-5 right-5 text-[var(--muted-foreground)] hover:text-[var(--danger)] transition-colors opacity-0 group-hover:opacity-100">
+      <button
+        onClick={() => alEliminar(rutina.id)}
+        className="absolute top-5 right-5 text-[var(--muted-foreground)] hover:text-[var(--danger)] transition-colors opacity-0 group-hover:opacity-100"
+      >
         <Trash2 className="w-5 h-5" />
       </button>
 
