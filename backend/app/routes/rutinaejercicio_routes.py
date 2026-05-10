@@ -60,11 +60,16 @@ def eliminar_ejercicio(id_rutina, id_ejercicio):
         usuarioBD=recibir_usuario_por_username(usuarioActual)
         rutina=recibir_rutina_por_id(id_rutina)
         rutina_ejercicio=recibir_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, id_ejercicio)
+        
         if rutina.usuario_id==usuarioBD.id:
+            ejercicio_eliminado_dict = rutina_ejercicio.to_dict()
+            
             eliminar_ejercicio_de_rutina(rutina_ejercicio)
-            return jsonify({"exito": True, "mensaje": f"Se ha eliminado correctamente", "rutina_ejercicio_eliminado": rutina_ejercicio.to_dict()}), 200
+            
+            return jsonify({"exito": True, "mensaje": "Se ha eliminado correctamente", "rutina_ejercicio_eliminado": ejercicio_eliminado_dict}), 200
         else:
             return jsonify({"exito": False, "error": "Acceso denegado"}), 403
+            
     except EjercicioNoEnRutinaError as e:
         return jsonify({"exito": False, "error": str(e)}), 404
     except RutinaNoEncontradaError as e:

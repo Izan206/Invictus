@@ -6,6 +6,7 @@ import Registro from './pages/Registro';
 import Login from './pages/Login';
 import Catalogo from './pages/Catalogo';
 import TusRutinas from './pages/TusRutinas';
+import DetalleRutina from './pages/DetalleRutina';
 import Error404 from './pages/Error404';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/rutinas" element={<TusRutinas />} />
+        <Route path="/rutinas/:id" element={<DetalleRutina />} />
         <Route path="*" element={<Error404 />} />
       </Route>
 
