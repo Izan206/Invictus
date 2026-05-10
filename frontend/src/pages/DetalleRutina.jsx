@@ -223,18 +223,18 @@ function DetalleRutina() {
   );
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-8 md:p-12">
-      <div className="max-w-[1400px] mx-auto bg-container border border-primary-muted rounded-lg p-8 md:p-10 shadow-2xl">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative group border-b border-primary-muted pb-8 mb-8">
+    <div className="min-h-screen bg-background text-foreground p-4 sm:p-8 md:p-12">
+      <div className="max-w-[1400px] mx-auto bg-container border border-primary-muted rounded-lg p-5 sm:p-8 md:p-10 shadow-2xl">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-6 relative group border-b border-primary-muted pb-8 mb-8">
           <div className="flex-1 w-full">
             {editandoInfo ? (
-              <div className="flex flex-col gap-3 w-full max-w-md">
+              <div className="flex flex-col gap-3 w-full max-w-[425px]">
                 <input
                   type="text"
                   name="nombre"
                   value={datosInfoEdit.nombre}
                   onChange={manejarCambioInfo}
-                  className="text-2xl font-bold bg-input border border-primary-muted p-2 rounded"
+                  className="text-xl sm:text-2xl font-bold bg-input border border-primary-muted p-2 rounded"
                   placeholder="Nombre de la rutina"
                 />
                 <input
@@ -270,25 +270,25 @@ function DetalleRutina() {
               </div>
             ) : (
               <div>
-                <div className="flex items-center gap-4 mb-2">
-                  <h1 className="text-4xl font-extrabold tracking-wide text-white">
+                <div className="flex items-start gap-4 mb-2">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wide text-white max-w-[425px] break-words">
                     {rutinaInfo.nombre || `Rutina #${id}`}
                   </h1>
                   <button
                     onClick={() => setEditandoInfo(true)}
-                    className="text-muted-foreground hover:text-primary opacity-0 group-hover:opacity-100 transition-all"
+                    className="text-muted-foreground hover:text-primary opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all mt-2"
                   >
                     <Edit3 className="w-5 h-5" />
                   </button>
                 </div>
                 {rutinaInfo.dias && (
-                  <p className="text-sm text-muted-foreground mb-3">
+                  <p className="text-sm text-muted-foreground mb-3 max-w-[425px] break-words">
                     Días: {rutinaInfo.dias}
                   </p>
                 )}
                 {rutinaInfo.descripcion && (
-                  <div className="border-l-2 border-primary pl-3">
-                    <p className="text-sm text-muted-foreground italic">
+                  <div className="border-l-2 border-primary pl-3 max-w-[425px]">
+                    <p className="text-sm text-muted-foreground italic break-words">
                       {rutinaInfo.descripcion}
                     </p>
                   </div>
@@ -297,9 +297,9 @@ function DetalleRutina() {
             )}
           </div>
 
-          <div className="flex flex-col items-end gap-4">
+          <div className="flex flex-row flex-wrap items-center justify-start md:justify-end gap-4 w-full md:w-auto">
             {musculosTrabajados.length > 0 && (
-              <div className="flex flex-wrap justify-end gap-2">
+              <div className="flex flex-wrap gap-2">
                 {musculosTrabajados.map((musculo, index) => (
                   <span
                     key={index}
@@ -312,7 +312,7 @@ function DetalleRutina() {
             )}
             <button
               onClick={eliminarRutinaCompleta}
-              className="bg-danger/20 text-danger border border-danger hover:bg-danger hover:text-white px-5 py-2 rounded-sm font-semibold transition-colors mt-2"
+              className="bg-danger/20 text-danger border border-danger hover:bg-danger hover:text-white px-5 py-2 rounded-sm font-semibold transition-colors shrink-0"
             >
               Eliminar Rutina
             </button>
@@ -320,13 +320,13 @@ function DetalleRutina() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="bg-[#222D2F] rounded-md p-6 border border-primary-muted flex flex-col h-[750px] lg:col-span-1">
+          <div className="bg-[#222D2F] rounded-md p-4 sm:p-6 border border-primary-muted flex flex-col h-[400px] md:h-[500px] lg:h-[750px] lg:col-span-1">
             <form onSubmit={manejarBusqueda} className="relative mb-6">
               <input
                 type="text"
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
-                placeholder="Buscar press, sentadilla..."
+                placeholder="Buscar press..."
                 className="w-full bg-input text-foreground border border-transparent rounded-md p-3 pl-12 focus:outline-none focus:border-primary-muted transition-colors"
               />
               <Search className="absolute left-4 top-3.5 text-muted-foreground w-5 h-5" />
@@ -338,7 +338,7 @@ function DetalleRutina() {
             <div className="flex-1 overflow-y-auto pr-2 space-y-3 custom-scrollbar">
               {cargandoCatalogo ? (
                 <p className="text-center text-muted-foreground mt-10">
-                  Cargando catálogo...
+                  Cargando...
                 </p>
               ) : ejerciciosCatalogo.length === 0 ? (
                 <p className="text-center text-muted-foreground mt-10">
@@ -353,10 +353,10 @@ function DetalleRutina() {
                     <img
                       src={`http://127.0.0.1:5000${ejercicio.image_url}`}
                       alt={ejercicio.nombre}
-                      className="w-14 h-14 object-cover rounded-sm bg-white flex-shrink-0"
+                      className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-sm bg-white flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-sm truncate capitalize">
+                      <h3 className="font-bold text-xs sm:text-sm truncate capitalize">
                         {ejercicio.nombre}
                       </h3>
                       <p className="text-[10px] text-muted-foreground uppercase mt-1">
@@ -375,8 +375,8 @@ function DetalleRutina() {
             </div>
           </div>
 
-          <div className="bg-[#222D2F] rounded-md p-6 border border-primary-muted flex flex-col h-[750px] lg:col-span-2">
-            <h2 className="text-xl font-bold mb-6 text-primary uppercase tracking-wide">
+          <div className="bg-[#222D2F] rounded-md p-4 sm:p-6 border border-primary-muted flex flex-col h-[500px] md:h-[600px] lg:h-[750px] lg:col-span-2">
+            <h2 className="text-lg sm:text-xl font-bold mb-6 text-primary uppercase tracking-wide">
               Ejercicios en esta Rutina
             </h2>
 
@@ -389,12 +389,12 @@ function DetalleRutina() {
                 </div>
               ) : ejerciciosRutina.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center opacity-50">
-                  <p className="text-foreground font-medium text-lg mb-2">
+                  <p className="text-foreground font-medium text-base sm:text-lg mb-2">
                     Rutina Vacía
                   </p>
-                  <p className="text-muted-foreground max-w-[250px]">
-                    Usa el buscador de la izquierda y pulsa el botón "+" para
-                    empezar a construir tu entrenamiento.
+                  <p className="text-muted-foreground text-sm max-w-[250px]">
+                    Usa el buscador y pulsa el botón "+" para construir tu
+                    entrenamiento.
                   </p>
                 </div>
               ) : (
@@ -404,21 +404,21 @@ function DetalleRutina() {
                   return (
                     <div
                       key={item.ejercicio_id}
-                      className="flex flex-col md:flex-row items-start md:items-center gap-5 bg-card p-4 rounded-md border border-transparent hover:border-search transition-colors"
+                      className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 bg-card p-4 rounded-md border border-transparent hover:border-search transition-colors"
                     >
                       <img
                         src={`http://127.0.0.1:5000${item.ejercicio_detalle.image_url}`}
                         alt={item.ejercicio_detalle.nombre}
-                        className="w-24 h-24 object-cover rounded-md bg-white flex-shrink-0"
+                        className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-md bg-white flex-shrink-0"
                       />
 
-                      <div className="flex-1 min-w-0 w-full md:w-auto">
-                        <h3 className="font-bold text-base capitalize mb-1">
+                      <div className="flex-1 min-w-0 w-full sm:w-auto">
+                        <h3 className="font-bold text-sm sm:text-base capitalize mb-1">
                           {item.ejercicio_detalle.nombre}
                         </h3>
 
                         {isEditing ? (
-                          <div className="flex gap-3 mt-2">
+                          <div className="flex flex-wrap gap-3 mt-2">
                             <div className="flex flex-col">
                               <label className="text-[10px] text-muted-foreground uppercase">
                                 Series
@@ -458,20 +458,20 @@ function DetalleRutina() {
                             </div>
                           </div>
                         ) : (
-                          <div className="flex gap-4 mt-2">
-                            <span className="text-sm text-muted-foreground">
+                          <div className="flex flex-wrap gap-4 mt-2">
+                            <span className="text-xs sm:text-sm text-muted-foreground">
                               <strong className="text-primary">
                                 {item.series}
                               </strong>{' '}
                               Series
                             </span>
-                            <span className="text-sm text-muted-foreground">
+                            <span className="text-xs sm:text-sm text-muted-foreground">
                               <strong className="text-primary">
                                 {item.repeticiones}
                               </strong>{' '}
                               Reps
                             </span>
-                            <span className="text-sm text-muted-foreground">
+                            <span className="text-xs sm:text-sm text-muted-foreground">
                               <strong className="text-primary">
                                 {item.peso || 0}
                               </strong>{' '}
@@ -481,7 +481,7 @@ function DetalleRutina() {
                         )}
                       </div>
 
-                      <div className="flex gap-2 self-end md:self-auto mt-4 md:mt-0">
+                      <div className="flex gap-2 self-end sm:self-auto mt-2 sm:mt-0">
                         {isEditing ? (
                           <>
                             <button
