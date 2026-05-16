@@ -42,7 +42,9 @@ function Header() {
               key={enlace.path}
               to={enlace.path}
               className={`text-sm font-medium transition-colors duration-200 hover:text-primary ${
-                ubicacion.pathname === enlace.path
+                ubicacion.pathname === enlace.path ||
+                (enlace.path === '/rutinas' &&
+                  ubicacion.pathname.startsWith('/rutinas'))
                   ? 'text-primary'
                   : 'text-foreground'
               }`}
@@ -111,7 +113,9 @@ function Header() {
               to={enlace.path}
               onClick={cerrarMenuMovil}
               className={`text-xl font-medium transition-colors ${
-                ubicacion.pathname === enlace.path
+                ubicacion.pathname === enlace.path ||
+                (enlace.path === '/rutinas' &&
+                  ubicacion.pathname.startsWith('/rutinas'))
                   ? 'text-primary'
                   : 'text-foreground'
               }`}
