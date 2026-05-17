@@ -18,6 +18,10 @@ def obtener_todos_los_ejercicios():
     ejercicios=Ejercicio.query.limit(70).all()
     return ejercicios
 
+def obtener_ejercicio_por_id(id):
+    ejercicio=Ejercicio.query.filter_by(id=id).first()
+    return ejercicio
+
 def obtener_ejercicio_por_id_api(id_api):
     ejercicio = Ejercicio.query.filter_by(id_api=id_api).first()
     return ejercicio

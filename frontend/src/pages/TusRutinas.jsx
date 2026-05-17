@@ -54,7 +54,7 @@ function TusRutinas() {
         setModalAbierto(false);
         setDatosFormulario({ nombre: '', dias: '', descripcion: '' });
         const nuevaRutinaId = respuesta.data.results.id;
-        navigate(`/rutinas/${nuevaRutinaId}`);
+        navigate(`/rutinas/rutina/${nuevaRutinaId}`);
       }
     } catch (error) {
       console.error('Error al crear la rutina:', error);

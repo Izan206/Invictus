@@ -2,7 +2,8 @@ import os
 
 from flask import Blueprint, jsonify, send_file, request
 from flask_jwt_extended import jwt_required
-from app.services.ejercicios_service import adaptar_ejercicios, buscar_ejercicio_por_nombre, recibir_todos_los_ejercicios, recibir_catalogo_paginado
+from app.services.ejercicios_service import adaptar_ejercicios, buscar_ejercicio_por_nombre, recibir_ejercicio_por_id, recibir_todos_los_ejercicios, recibir_catalogo_paginado
+from app.repositories.ejercicio_repo import obtener_ejercicio_por_id_api
 from app.clients.exercisedb_client import fetch_imagen_ejercicio
 from app.exceptions.exceptions import EjerciciosNoEncontradosError
 
@@ -44,7 +45,21 @@ def obtener_catalogo():
         return jsonify({"exito": False, "error": str(e)}), 404
     except Exception as e:
         return jsonify({"exito": False, "error": f"Error al cargar el catálogo: {str(e)}"}), 500
-        
+
+
+@ejercicios_bp.route('/<int:id>', methods=['GET'])
+def obtener_ejercicio_detalle(id):
+    try:
+        ejercicio = recibir_ejercicio_por_id(id)
+        if not ejercicio:
+            return jsonify({"exito": False, "error": f"Ejercicio no encontrado"}), 404
+
+        return jsonify({
+            "exito": True,
+            "ejercicio": ejercicio.to_dict()
+        }), 200
+    except Exception as e:
+        return jsonify({"exito": False, "error": f"Error al cargar el ejercicio: {str(e)}"}), 500
 
 @ejercicios_bp.route('/buscar/<nombreBuscado>', methods=['GET'])
 @jwt_required()

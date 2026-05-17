@@ -1,5 +1,5 @@
 from deep_translator import GoogleTranslator
-from app.repositories.ejercicio_repo import añadir_ejercicio, obtener_ejercicio_por_nombre, obtener_ejercicios_contengan_nombre, obtener_ejercicios_paginados, obtener_todos_los_ejercicios, obtener_ejercicio_por_id_api
+from app.repositories.ejercicio_repo import añadir_ejercicio, obtener_ejercicio_por_nombre, obtener_ejercicios_contengan_nombre, obtener_ejercicios_paginados, obtener_todos_los_ejercicios, obtener_ejercicio_por_id_api, obtener_ejercicio_por_id
 from app.models.ejercicio import Ejercicio
 from app.db.database import db
 from app.clients.exercisedb_client import fetch_ejercicio_por_nombre, fetch_ejercicios
@@ -18,6 +18,12 @@ def recibir_ejercicio_por_nombre(nombre):
     ejercicio = obtener_ejercicio_por_nombre(nombre)
     if ejercicio is None:
         raise EjercicioNoEncontradoError(f"No se ha encontrado el ejercicio con el nombre {nombre}")
+    return ejercicio
+
+def recibir_ejercicio_por_id(id):
+    ejercicio = obtener_ejercicio_por_id(id)
+    if ejercicio is None:
+        raise EjercicioNoEncontradoError(f"No se ha encontrado el ejercicio con el id {id}")
     return ejercicio
 
 def buscar_ejercicio_por_nombre(nombre):
