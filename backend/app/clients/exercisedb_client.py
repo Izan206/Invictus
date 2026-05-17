@@ -34,6 +34,8 @@ def fetch_ejercicios():
             response.raise_for_status()
             data_list=response.json()            
             ejercicios_totales.extend(data_list)
+            time.sleep(1.5)
+            
         except Exception as e:
             raise APIError(f"ExericseDB no responde: {str(e)}", 500)
     
