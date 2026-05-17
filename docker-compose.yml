@@ -21,6 +21,7 @@ services:
       - db
     volumes:
       - ./backend:/app
+    command: gunicorn --timeout 150 --bind 0.0.0.0:5000 app.main:app
     environment:
       - DB_USER=user
       - DB_PASSWORD=password
@@ -29,6 +30,7 @@ services:
       - FLASK_APP=app.main
       - SECRET_KEY=148924jfq3f21rfh
       - JWT_SECRET_KEY=akf228934mokf21
+      - RAPIDAPI_KEY=${RAPIDAPI_KEY}
   frontend:
     build: "./frontend"
     ports:

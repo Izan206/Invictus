@@ -138,7 +138,7 @@ def recibir_todos_los_ejercicios():
 def recibir_catalogo_paginado(pagina=1, por_pagina=12, categoria=None, busqueda=None):
     paginacion = obtener_ejercicios_paginados(pagina, por_pagina, categoria, busqueda)
     
-    if paginacion.total == 0 and not categoria and not busqueda:
+    if paginacion.total < 70 and not categoria and not busqueda:
         adaptar_ejercicios()
         paginacion = obtener_ejercicios_paginados(pagina, por_pagina, categoria, busqueda)
     if paginacion.total == 0:
