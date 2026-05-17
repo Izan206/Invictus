@@ -6,7 +6,7 @@ function RutinaCard({ rutina, index, alEliminar }) {
 
   return (
     <div
-      onClick={() => navigate(`/rutinas/${rutina.id}`)}
+      onClick={() => navigate(`/rutinas/rutina/${rutina.id}`)}
       className="bg-container rounded-lg p-6 relative group border border-transparent hover:border-primary-muted transition-all flex flex-col cursor-pointer hover:shadow-[0_0_15px_rgba(0,255,255,0.1)]"
     >
       <button

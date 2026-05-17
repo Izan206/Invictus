@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 // eslint-disable-next-line
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../services/api';
@@ -32,6 +33,7 @@ const itemVariants = {
 };
 
 function Catalogo() {
+  const navigate = useNavigate();
   const [busqueda, setBusqueda] = useState('');
   const [categoriaActiva, setCategoriaActiva] = useState('Todo');
 
@@ -226,9 +228,12 @@ function Catalogo() {
                 >
                   {ejerciciosBd.map((ejercicio) => (
                     <motion.div
-                      key={ejercicio.id_api}
+                      key={ejercicio.id}
                       variants={itemVariants}
                       whileHover={{ scale: 1.02 }}
+                      onClick={() =>
+                        navigate(`/catalogo/ejercicio/${ejercicio.id}`)
+                      }
                       className="bg-[#111111] border border-neutral-800 rounded-xl overflow-hidden hover:border-primary transition-colors duration-300 group cursor-pointer flex flex-col"
                     >
                       <div className="h-44 bg-white flex items-center justify-center p-4 overflow-hidden relative">
