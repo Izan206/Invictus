@@ -25,5 +25,14 @@ class Usuario(db.Model):
     def check_password(self, password_introducida):
         return check_password_hash(self.password_hash, password_introducida)
     
+    def to_dict(self):
+        return {
+            "username": self.username,
+            "email": self.email,
+            "peso": self.peso,
+            "altura": self.altura,
+            "edad": self.edad
+        }
+        
     def __repr__(self):
         return f'<Usuario {self.username}>'

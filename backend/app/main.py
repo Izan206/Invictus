@@ -12,6 +12,7 @@ from flask_migrate import Migrate
 from app.routes.ejercicios_routes import ejercicios_bp
 from app.routes.rutinas_routes import rutinas_bp
 from app.routes.rutinaejercicio_routes import rutinaejercicio_bp
+from app.routes.usuarios_routes import usuarios_bp
 
 app=Flask(__name__)
 CORS(app, origins="http://localhost:5173")
@@ -25,6 +26,7 @@ app.register_blueprint(auth_bp, url_prefix="/auth")
 app.register_blueprint(ejercicios_bp, url_prefix="/api/ejercicios")
 app.register_blueprint(rutinas_bp, url_prefix="/api/rutinas")
 app.register_blueprint(rutinaejercicio_bp, url_prefix="/api/rutina")
+app.register_blueprint(usuarios_bp, url_prefix="/api/usuarios")
 
 @app.route('/')
 def hello_world():

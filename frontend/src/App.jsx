@@ -8,6 +8,7 @@ import Catalogo from './pages/Catalogo';
 import TusRutinas from './pages/TusRutinas';
 import DetalleRutina from './pages/DetalleRutina';
 import DetalleEjercicio from './pages/DetalleEjercicio';
+import Perfil from './pages/Perfil';
 import Error404 from './pages/Error404';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/catalogo/ejercicio/:id" element={<DetalleEjercicio />} />
         <Route path="/rutinas" element={<TusRutinas />} />
         <Route path="/rutinas/rutina/:id" element={<DetalleRutina />} />
+        <Route path="/perfil" element={<Perfil />} />
         <Route path="*" element={<Error404 />} />
       </Route>
 
