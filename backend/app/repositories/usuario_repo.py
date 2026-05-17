@@ -15,3 +15,6 @@ def obtener_usuario_por_id(usuario_id):
 def obtener_usuario_por_email(email):
     usuario=Usuario.query.filter_by(email=email).first()
     return usuario
+
+def guardar_cambios():
+    db.session.commit()

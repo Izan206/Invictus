@@ -291,7 +291,7 @@ function Catalogo() {
               Anterior
             </button>
             <span
-              className={`text-primary font-bold text-sm px-6 py-2 rounded-full border transition-colors ${cargando ? 'bg-transparent border-neutral-800 text-neutral-500' : 'bg-primary/10 border-primary/20'}`}
+              className={`text-primary font-bold text-sm px-6 py-2 rounded-full border border-primary transition-colors ${cargando ? 'bg-transparent border-neutral-800 text-neutral-500' : 'bg-primary/10 border-primary/20'}`}
             >
               PÁGINA {meta.pagina_actual} / {meta.paginas_totales}
             </span>

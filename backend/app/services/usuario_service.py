@@ -1,5 +1,5 @@
 from app.models.usuario import Usuario
-from app.repositories.usuario_repo import añadir_usuario, obtener_usuario_por_email, obtener_usuario_por_id, obtener_usuario_por_username
+from app.repositories.usuario_repo import añadir_usuario, obtener_usuario_por_email, obtener_usuario_por_id, obtener_usuario_por_username, guardar_cambios
 from app.exceptions.exceptions import DatosFaltantesError, UsuarioExistenteError, UsuarioNoEncontradoError    
 
 def recibir_usuario_por_username(username):
@@ -50,3 +50,22 @@ def recibir_usuario_por_id(usuario_id):
         return usuario
     else:
         raise UsuarioNoEncontradoError(f"No se ha encontrado ningun usuario con el id {usuario_id}")
+    
+
+def actualizar_perfil_usuario(username, data):
+    usuario = obtener_usuario_por_username(username)
+    if not usuario:
+        raise UsuarioNoEncontradoError("Usuario no encontrado")
+
+    if 'peso' in data:
+        usuario.peso = data.get('peso')
+    if 'altura' in data:
+        usuario.altura = data.get('altura')
+    if 'edad' in data:
+        usuario.edad = data.get('edad')
+
+    try:
+        guardar_cambios()
+        return usuario
+    except Exception as e:
+        raise Exception(f"Error al actualizar el perfil: {e}")
