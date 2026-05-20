@@ -1,5 +1,5 @@
 function EjercicioHeader({ ejercicio }) {
-  const BACKEND_URL = 'http://127.0.0.1:5000';
+  const BACKEND_URL = import.meta.env.VITE_API_URL;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start mb-10">

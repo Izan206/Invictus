@@ -44,7 +44,7 @@ function EjerciciosRutinaPanel({
                 className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 bg-card p-4 rounded-md border border-transparent hover:border-search transition-colors"
               >
                 <img
-                  src={`http://127.0.0.1:5000${item.ejercicio_detalle.image_url}`}
+                  src={`${import.meta.env.VITE_API_URL}${item.ejercicio_detalle.image_url}`}
                   alt={item.ejercicio_detalle.nombre}
                   className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-md bg-white flex-shrink-0"
                 />
