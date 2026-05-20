@@ -38,7 +38,7 @@ function CatalogoPanel({
               className="flex items-center gap-3 bg-card p-3 rounded-md border border-transparent hover:border-primary-muted transition-colors group"
             >
               <img
-                src={`http://127.0.0.1:5000${ejercicio.image_url}`}
+                src={`${import.meta.env.VITE_API_URL}${ejercicio.image_url}`}
                 alt={ejercicio.nombre}
                 className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-sm bg-white flex-shrink-0"
               />
