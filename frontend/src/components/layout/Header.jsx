@@ -21,7 +21,7 @@ function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-background/95 backdrop-blur-md border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-        <Link to="/" onClick={cerrarMenuMovil} className="z-50 md:-ml-11">
+        <Link to="/" onClick={cerrarMenuMovil} className="z-50">
           <img
             src={logoInvictus}
             alt="Invictus"

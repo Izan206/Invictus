@@ -142,7 +142,7 @@ function Perfil() {
               <User className="w-10 h-10 text-primary" />
             </div>
             <div>
-              <h1 className="text-3xl font-black text-white uppercase tracking-wider">
+              <h1 className="text-3xl font-black text-white uppercase tracking-wider leading-tight">
                 {datosUsuario.username}
               </h1>
               <p className="text-neutral-400 font-medium">
@@ -250,12 +250,11 @@ function Perfil() {
       >
         <button
           onClick={() => navigate('/catalogo')}
-          className="group flex items-center justify-between bg-container border border-neutral-800 hover:border-primary rounded-2xl p-6 transition-all duration-300 text-left overflow-hidden relative"
+          className="flex items-center justify-between bg-container border border-neutral-800 rounded-2xl p-6 transition-all duration-300 text-left hover:border-primary hover:bg-primary/5"
         >
-          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10 transition-opacity group-hover:opacity-100 opacity-0"></div>
-          <div className="flex items-center gap-5 z-10">
-            <div className="w-14 h-14 bg-[#111111] rounded-xl flex items-center justify-center border border-neutral-800 group-hover:border-primary/50 transition-colors">
-              <Search className="w-7 h-7 text-white group-hover:text-primary transition-colors" />
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 bg-[#111111] rounded-xl flex items-center justify-center border border-neutral-800">
+              <Search className="w-7 h-7 text-white" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-white uppercase tracking-wider">
@@ -266,17 +265,16 @@ function Perfil() {
               </p>
             </div>
           </div>
-          <ArrowRight className="w-6 h-6 text-neutral-600 group-hover:text-primary group-hover:translate-x-1 transition-all z-10" />
+          <ArrowRight className="w-6 h-6 text-neutral-600 transition-all" />
         </button>
 
         <button
           onClick={() => navigate('/rutinas')}
-          className="group flex items-center justify-between bg-container border border-neutral-800 hover:border-primary rounded-2xl p-6 transition-all duration-300 text-left overflow-hidden relative"
+          className="flex items-center justify-between bg-container border border-neutral-800 rounded-2xl p-6 transition-all duration-300 text-left hover:border-primary hover:bg-primary/5"
         >
-          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10 transition-opacity group-hover:opacity-100 opacity-0"></div>
-          <div className="flex items-center gap-5 z-10">
-            <div className="w-14 h-14 bg-[#111111] rounded-xl flex items-center justify-center border border-neutral-800 group-hover:border-primary/50 transition-colors">
-              <Dumbbell className="w-7 h-7 text-white group-hover:text-primary transition-colors" />
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 bg-[#111111] rounded-xl flex items-center justify-center border border-neutral-800">
+              <Dumbbell className="w-7 h-7 text-white" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-white uppercase tracking-wider">
@@ -287,7 +285,7 @@ function Perfil() {
               </p>
             </div>
           </div>
-          <ArrowRight className="w-6 h-6 text-neutral-600 group-hover:text-primary group-hover:translate-x-1 transition-all z-10" />
+          <ArrowRight className="w-6 h-6 text-neutral-600 transition-all" />
         </button>
       </motion.div>
     </div>
