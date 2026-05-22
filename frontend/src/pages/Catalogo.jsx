@@ -127,7 +127,7 @@ function Catalogo() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-3xl font-bold text-white tracking-widest uppercase">
+          <h1 className="text-3xl font-bold text-white tracking-widest uppercase leading-tight">
             Catálogo de Ejercicios
           </h1>
           <div className="w-48 h-1 bg-primary mt-4"></div>
@@ -138,13 +138,16 @@ function Catalogo() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-container border border-neutral-800 rounded-2xl overflow-hidden flex flex-col md:flex-row"
+            onClick={() =>
+              navigate(`/catalogo/ejercicio/${ejercicioDestacado.id}`)
+            }
+            className="bg-container border border-neutral-800 rounded-2xl overflow-hidden flex flex-col md:flex-row cursor-pointer hover:border-primary transition-colors duration-300"
           >
             <div className="p-8 md:p-12 flex flex-col justify-center w-full md:w-1/2">
               <span className="text-primary font-bold text-xs tracking-widest uppercase mb-4">
                 Ejercicio del Día
               </span>
-              <h2 className="text-4xl font-bold text-white uppercase mb-4">
+              <h2 className="text-4xl font-bold text-white uppercase mb-4 leading-tight">
                 {ejercicioDestacado.nombre}
               </h2>
               <p className="text-neutral-400 mb-8 max-w-md line-clamp-3">
