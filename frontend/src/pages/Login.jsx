@@ -33,7 +33,8 @@ function Login() {
       login({
         token: respuesta.token,
         email: respuesta.usuario,
-        username: respuesta.username
+        username: respuesta.username,
+        foto_url: respuesta.foto_url
       });
       pagina('/catalogo');
     } catch (excepcion) {
