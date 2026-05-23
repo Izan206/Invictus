@@ -4,7 +4,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from app.services.rutinas_services import recibir_rutina_por_id
 from app.services.usuario_service import recibir_usuario_por_username
 from app.exceptions.exceptions import EjercicioEnRutinaYaExistente, EjercicioNoEnRutinaError, RutinaNoEncontradaError
-from app.services.rutinaejercicio_service import actualizar_ejercicio_en_rutina, añadir_ejercicio_a_rutina, eliminar_ejercicio_de_rutina, recibir_ejercicios_por_rutina, recibir_rutinaejercicio_por_idrutina_y_idejercicio
+from app.services.rutinaejercicio_service import actualizar_ejercicio_en_rutina, añadir_ejercicio_a_rutina, eliminar_ejercicio_de_rutina, recibir_ejercicios_por_rutina, recibir_rutinaejercicio_por_idrutina_y_idejercicio, reordenar_ejercicios_rutina
 
 
 rutinaejercicio_bp=Blueprint("rutinaejercicio", __name__)
@@ -98,3 +98,24 @@ def editar_ejercicio(id_rutina, id_ejercicio):
         return jsonify({"exito": False, "error": str(e)}), 404
     except Exception as e:
         return jsonify({"exito": False, "error": str(e)}), 500
+    
+@rutinaejercicio_bp.route("/<int:id_rutina>/reordenar", methods=["POST"])
+@jwt_required()
+def reordenar_ejercicios(id_rutina):
+    data=request.get_json()
+    orden_ids=data.get("orden_ids", [])
+    
+    try:
+        usuarioActual=get_jwt_identity()
+        usuarioBD=recibir_usuario_por_username(usuarioActual)
+        rutina=recibir_rutina_por_id(id_rutina)
+        
+        if rutina.usuario_id==usuarioBD.id:
+            reordenar_ejercicios_rutina(id_rutina, orden_ids)
+            return jsonify({"exito": True, "mensaje": "Ejercicios reordenados correctamente"}), 200
+        else:
+            return jsonify({"exito": False, "error": "Acceso denegado"}), 403
+    except RutinaNoEncontradaError as e:
+        return jsonify({"exito": False, "error": str(e)}), 404
+    except Exception as e:
+        return jsonify({"exito": False, "error": str(e)}), 500   

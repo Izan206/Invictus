@@ -7,6 +7,7 @@ class RutinaEjercicio(db.Model):
     series=db.Column(db.Integer, default=3)
     repeticiones=db.Column(db.Integer, default=8)
     peso = db.Column(db.Float)
+    orden=db.Column(db.Integer, default=0)
     
     rutina = db.relationship("Rutina", back_populates="ejercicios")
     ejercicio = db.relationship("Ejercicio", back_populates="rutinas")
