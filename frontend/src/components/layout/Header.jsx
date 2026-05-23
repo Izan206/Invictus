@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoInvictus from '../../assets/logo/logo-final.png';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 function Header() {
@@ -21,7 +21,7 @@ function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-background/95 backdrop-blur-md border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-        <Link to="/" onClick={cerrarMenuMovil} className="z-50 md:-ml-11">
+        <Link to="/" onClick={cerrarMenuMovil} className="z-50">
           <img
             src={logoInvictus}
             alt="Invictus"
@@ -51,12 +51,19 @@ function Header() {
           {usuario ? (
             <Link
               to="/perfil"
-              className=" group flex items-center justify-center gap-2 border border-primary rounded-full py-4 px-10 text-foreground hover:bg-primary  hover:text-black transition-colors duration-500"
+              className="w-10 h-10 rounded-full overflow-hidden bg-neutral-800 flex items-center justify-center transition-transform duration-300 hover:scale-105"
             >
-              <User className="w-5 h-5 text-foreground group-hover:text-black transition-colors duration-500" />
-              <span className="font-medium text-sm group-hover:font-medium">
-                {usuario.username}
-              </span>
+              {usuario.foto_url ? (
+                <img
+                  src={usuario.foto_url}
+                  alt={usuario.username}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-gray-300 font-medium text-lg uppercase">
+                  {usuario.username ? usuario.username.charAt(0) : ''}
+                </span>
+              )}
             </Link>
           ) : (
             <Link
@@ -112,9 +119,21 @@ function Header() {
             <Link
               to="/perfil"
               onClick={cerrarMenuMovil}
-              className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
+              className="flex items-center gap-4 text-foreground hover:text-primary transition-colors"
             >
-              <User className="w-6 h-6 text-primary" />
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-neutral-800 flex items-center justify-center">
+                {usuario.foto_url ? (
+                  <img
+                    src={usuario.foto_url}
+                    alt={usuario.username}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-gray-300 font-medium text-xl uppercase">
+                    {usuario.username ? usuario.username.charAt(0) : ''}
+                  </span>
+                )}
+              </div>
               <span className="text-xl font-medium">{usuario.username}</span>
             </Link>
           ) : (

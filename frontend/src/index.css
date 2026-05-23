@@ -25,6 +25,27 @@
     --radius-lg: 20px;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background-color: var(--primary-muted);
+    border-radius: 10px;
+  }
+
+  html::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary);
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
