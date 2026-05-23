@@ -36,7 +36,7 @@ def login():
     try:
         usuario=autenticacion(email, password_introducida)
         token_usuario=create_access_token(identity=usuario.username)
-        return jsonify({"exito": True, "usuario": usuario.email, "username": usuario.username, "token": token_usuario}), 200
+        return jsonify({"exito": True, "usuario": usuario.email, "username": usuario.username, "token": token_usuario, "foto_url": usuario.foto_url}), 200
     except CredencialesInvalidasError as e:
         return jsonify({"exito": False, "error": str(e)}), 401
 
