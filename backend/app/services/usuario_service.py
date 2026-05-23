@@ -58,11 +58,13 @@ def actualizar_perfil_usuario(username, data):
         raise UsuarioNoEncontradoError("Usuario no encontrado")
 
     if 'peso' in data:
-        usuario.peso = data.get('peso')
+        usuario.peso = data.get('peso') if data.get('peso') != "" else None
     if 'altura' in data:
-        usuario.altura = data.get('altura')
+        usuario.altura = data.get('altura') if data.get('altura') != "" else None
     if 'edad' in data:
-        usuario.edad = data.get('edad')
+        usuario.edad = data.get('edad') if data.get('edad') != "" else None
+    if 'foto_url' in data:
+        usuario.foto_url = data.get('foto_url')
 
     try:
         guardar_cambios()

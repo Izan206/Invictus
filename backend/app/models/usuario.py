@@ -17,6 +17,8 @@ class Usuario(db.Model):
     peso=db.Column(db.Float)
     altura=db.Column(db.Float)
     edad=db.Column(db.Integer)
+    foto_url = db.Column(db.String(255), nullable=True)
+    
     rutinas = db.relationship("Rutina", back_populates="usuario")
     
     def set_password(self, password_introducida):
@@ -31,7 +33,8 @@ class Usuario(db.Model):
             "email": self.email,
             "peso": self.peso,
             "altura": self.altura,
-            "edad": self.edad
+            "edad": self.edad,
+            "foto_url": self.foto_url
         }
         
     def __repr__(self):
