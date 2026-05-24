@@ -99,7 +99,7 @@ def editar_ejercicio(id_rutina, id_ejercicio):
     except Exception as e:
         return jsonify({"exito": False, "error": str(e)}), 500
     
-@rutinaejercicio_bp.route("/<int:id_rutina>/reordenar", methods=["POST"])
+@rutinaejercicio_bp.route("/<int:id_rutina>/reordenar", methods=["PUT"])
 @jwt_required()
 def reordenar_ejercicios(id_rutina):
     data=request.get_json()

@@ -19,7 +19,9 @@ def añadir_ejercicio_a_rutina(id_rutina, data):
     
     rutina_ejercicio= RutinaEjercicio(rutina_id=id_rutina, ejercicio_id=ejercicio_id, series=series, repeticiones=repeticiones, peso=peso, orden=nuevo_orden)
     guardar_ejercicio_en_rutina(rutina_ejercicio)
-    return rutina_ejercicio
+    
+    ejercicio_completo = obtener_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, ejercicio_id)
+    return ejercicio_completo
 
 
 def recibir_ejercicios_por_rutina(id_rutina):
