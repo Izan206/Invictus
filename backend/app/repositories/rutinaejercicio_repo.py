@@ -11,7 +11,7 @@ def obtener_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, id_ejercicio):
     return rutina_ejercicio
 
 def obtener_ejercicios_rutina(id_rutina):
-    ejercicios_rutina=RutinaEjercicio.query.filter_by(rutina_id=id_rutina).all()
+    ejercicios_rutina=RutinaEjercicio.query.filter_by(rutina_id=id_rutina).order_by(RutinaEjercicio.orden.asc()).all()
     return ejercicios_rutina
 
 def confirmar_eliminacion_ejercicio_de_rutina(rutina_ejercicio):
