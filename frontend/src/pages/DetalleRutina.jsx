@@ -4,6 +4,7 @@ import api from '../services/api';
 import RutinaHeader from '../components/rutinas/RutinaHeader';
 import CatalogoPanel from '../components/rutinas/CatalogoPanel';
 import EjerciciosRutinaPanel from '../components/rutinas/EjerciciosRutinaPanel';
+import { arrayMove } from '@dnd-kit/sortable';
 
 function DetalleRutina() {
   const { id } = useParams();
@@ -216,6 +217,36 @@ function DetalleRutina() {
     new Set(ejerciciosRutina.map((e) => e.ejercicio_detalle.grupo_muscular))
   );
 
+  const manejarDragEnd = async (evento) => {
+    const { active, over } = evento;
+
+    if (active && over && active.id !== over.id) {
+      let nuevoOrden = [];
+
+      setEjerciciosRutina((ejerciciosActuales) => {
+        const oldIndex = ejerciciosActuales.findIndex(
+          (e) => e.ejercicio_id === active.id
+        );
+        const newIndex = ejerciciosActuales.findIndex(
+          (e) => e.ejercicio_id === over.id
+        );
+
+        const nuevaLista = arrayMove(ejerciciosActuales, oldIndex, newIndex);
+
+        nuevoOrden = nuevaLista.map((e) => e.ejercicio_id);
+        return nuevaLista;
+      });
+
+      try {
+        await api.put(`api/rutina/${id}/reordenar`, {
+          orden_ids: nuevoOrden
+        });
+      } catch (error) {
+        console.error('Error al guardar el orden en la base de datos:', error);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground p-4 sm:p-8 md:p-12">
       <div className="max-w-[1400px] mx-auto bg-container border border-primary-muted rounded-lg p-5 sm:p-8 md:p-10 shadow-2xl">
@@ -249,6 +280,7 @@ function DetalleRutina() {
             cancelarEdicion={cancelarEdicion}
             iniciarEdicion={iniciarEdicion}
             eliminarEjercicioDeRutina={eliminarEjercicioDeRutina}
+            manejarDragEnd={manejarDragEnd}
           />
         </div>
       </div>

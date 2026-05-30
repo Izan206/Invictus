@@ -14,9 +14,14 @@ def añadir_ejercicio_a_rutina(id_rutina, data):
     if ejercicio_bd:
         raise EjercicioEnRutinaYaExistente("Ya existe este ejercicio en la rutina, edita las series, repeticiones o peso")
     
-    rutina_ejercicio= RutinaEjercicio(rutina_id=id_rutina, ejercicio_id=ejercicio_id, series=series, repeticiones=repeticiones, peso=peso)
+    ejercicios_actuales=obtener_ejercicios_rutina(id_rutina)
+    nuevo_orden=len(ejercicios_actuales)
+    
+    rutina_ejercicio= RutinaEjercicio(rutina_id=id_rutina, ejercicio_id=ejercicio_id, series=series, repeticiones=repeticiones, peso=peso, orden=nuevo_orden)
     guardar_ejercicio_en_rutina(rutina_ejercicio)
-    return rutina_ejercicio
+    
+    ejercicio_completo = obtener_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, ejercicio_id)
+    return ejercicio_completo
 
 
 def recibir_ejercicios_por_rutina(id_rutina):
@@ -48,3 +53,11 @@ def actualizar_ejercicio_en_rutina(id_rutina, id_ejercicio, data):
 
     guardar_actualizacion_ejercicio()
     return rutina_ejercicio
+
+def reordenar_ejercicios_rutina(id_rutina, orden_ids):
+    for index, ejercicio_id in enumerate(orden_ids):
+        rutina_ejercicio = obtener_rutinaejercicio_por_idrutina_y_idejercicio(id_rutina, ejercicio_id)
+        if rutina_ejercicio:
+            rutina_ejercicio.orden=index
+    guardar_actualizacion_ejercicio()
+        
